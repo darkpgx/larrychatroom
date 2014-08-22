@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    #messagebox {
+    }
+
+    #chatbox{
+      border: 2px solid black;
+      width: 300px;
+      height: 500px;
+      overflow: auto;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <button>Home</button>
+  Welcome to room: <%= rmname %>
+  </div>
+  <div>
+    <div>
+      <input id="messagebox" type="text" value placeholder="Enter Message" autofocus>
+    </div>
+    <div id="chatbox"></div>
+  </div>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+    var user = prompt("Enter user name");
+    $('button').click( function () {
+      window.location = '/';
+    });
+    $('input').keyup(function(e){
+      if(e.keyCode == 13 & $(this).val() !== ""){
+        var msg = $(this).val();
+        $("#chatbox").append("<div>" + user + ": " +msg + "</div>");
+        $(this).val("");
+      };
+    });
+  </script>
+</body>
+</html>

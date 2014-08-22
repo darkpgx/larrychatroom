@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Main Chatroom Page</title>
+</head>
+<body>
+  <div>
+    <input type="TEXT" value placeholder = "Enter Room Name" autofocus >
+    <button>Enter Room</button>
+  </div>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+    $('button').click(function(){
+      var rmname = $('input').val();
+      if (rmname !== "") {
+        window.location = '/room/' + rmname;
+      };
+    });
+  </script>
+</head>
+</body>
+</html>
