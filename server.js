@@ -26,4 +26,8 @@ app.get('/getchat', function(req, res){
   res.send(chat[req.query.rmname]);
 });
 
+app.get('/videochat/:rmname', function(req, res){
+  res.render('videochat');
+});
+
 app.listen(8888);

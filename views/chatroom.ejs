@@ -17,8 +17,9 @@
 </head>
 <body>
   <div>
-    <button>Home</button>
-  Welcome to room:<%= rmname %>
+    <button id = "home">Home</button>
+    Welcome to room:<%= rmname %>
+    <button id ="videochat">Video Chat</button>
   </div>
   <div>
     <div>
@@ -41,8 +42,11 @@
       $('#chatbox').animate({scrollTop: 10000}, 100);
     }, 500);
 
-    $('button').click( function () {
+    $('#home').click( function () {
       window.location = '/';
+    });
+    $('#videochat').click( function () {
+      window.location = '/videochat/' + rmname;
     });
     $('input').keyup(function(e){
       if(e.keyCode == 13 & $(this).val() !== ""){

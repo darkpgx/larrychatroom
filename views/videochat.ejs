@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>videochat</title>
+</head>
+<body>
+  <div id = 'myPublisherDiv'></div>
+  <div id = 'subscribersDiv'></div>
+  <button id = 'home'>home</button>
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src='//static.opentok.com/webrtc/v2.2/js/opentok.min.js'></script>
+  <script>
+    $('#home').click(function() {
+      window.location = '/';
+    });
+    var apiKey = '44956402';
+    var sessionId = '1_MX40NDk1NjQwMn5-U2F0IEF1ZyAyMyAxMDoxNDoxMCBQRFQgMjAxNH4wLjIyODE1NTE0fn4';
+    var session = OT.initSession(apiKey, sessionId);
+    var token = 'T1==cGFydG5lcl9pZD00NDk1NjQwMiZzaWc9ZGYwOGMxM2Q2ZTY4ZmU1MWRhYWYzYmU1MmQ4NGVlZjI2ZjUwNTUyMjpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5EazFOalF3TW41LVUyRjBJRUYxWnlBeU15QXhNRG94TkRveE1DQlFSRlFnTWpBeE5INHdMakl5T0RFMU5URTBmbjQmY3JlYXRlX3RpbWU9MTQwODgxOTEyMCZub25jZT0wLjYxNDA1MzA4MTY3MjI5Njc=';
+    session.on ({
+      streamCreated: function(event) {
+        session.subscribe(event.stream, 'subscribersDiv', {insertMode: 'append'});
+      }
+    });
+    session.connect(token, function(error) {
+      if (error) {
+        console.log(error.message);
+      }
+      else {
+        session.publish('myPublisherDiv', {width:320, height:240});
+      }
+    });
+  </script>
+</body>
+</html>
