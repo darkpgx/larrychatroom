@@ -18,7 +18,7 @@
 <body>
   <div>
     <button>Home</button>
-  Welcome to room: <%= rmname %>
+  Welcome to room:<%= rmname %>
   </div>
   <div>
     <div>
@@ -29,13 +29,25 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script>
     var user = prompt("Enter user name");
+    var rmname = "<%= rmname %>";
+    setInterval(function(){
+      $.get("/getchat?rmname=" + rmname, function(res) {
+        var chat = res;
+        $('#chatbox').empty();
+        for (var i = 0; i < chat.length; i++) {
+          $('#chatbox').append("<div>" + chat[i].user + ": " + chat[i].msg + "</div>");
+        };
+      });
+      $('#chatbox').animate({scrollTop: 10000}, 100);
+    }, 500);
+
     $('button').click( function () {
       window.location = '/';
     });
     $('input').keyup(function(e){
       if(e.keyCode == 13 & $(this).val() !== ""){
         var msg = $(this).val();
-        $("#chatbox").append("<div>" + user + ": " +msg + "</div>");
+        $.get("/chat?msg=" + msg + "&user=" + user + "&rmname=" + rmname);
         $(this).val("");
       };
     });
