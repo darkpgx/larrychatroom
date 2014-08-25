@@ -1,5 +1,8 @@
 var app = require('express')();
 app.set('view engine', 'ejs');
+var OpenTok = require('opentok'),
+    opentok = new OpenTok("44956442", "9461b7c9ced22aa397f23bb91564d3ddf5e88e1f");
+
 var chat = {};
 
 app.get('/', function(req, res){
@@ -27,7 +30,12 @@ app.get('/getchat', function(req, res){
 });
 
 app.get('/videochat/:rmname', function(req, res){
-  res.render('videochat');
+  opentok.createSession(function(err, session) {
+    if (err) return console.log(err);
+    SID = session.sessionId;
+    var TK = opentok.generateToken(SID);
+    res.render('videochat', {session: SID, token: TK});
+  });
 });
 
 app.listen(8888);

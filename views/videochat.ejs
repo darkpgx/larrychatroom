@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>videochat</title>
+  <title></title>
 </head>
 <body>
   <div id = 'myPublisherDiv'></div>
@@ -14,10 +14,10 @@
     $('#home').click(function() {
       window.location = '/';
     });
-    var apiKey = '44956402';
-    var sessionId = '1_MX40NDk1NjQwMn5-U2F0IEF1ZyAyMyAxMDoxNDoxMCBQRFQgMjAxNH4wLjIyODE1NTE0fn4';
+    var apiKey = '44956442';
+    var sessionId = "<%= session %>";
     var session = OT.initSession(apiKey, sessionId);
-    var token = 'T1==cGFydG5lcl9pZD00NDk1NjQwMiZzaWc9ZGYwOGMxM2Q2ZTY4ZmU1MWRhYWYzYmU1MmQ4NGVlZjI2ZjUwNTUyMjpyb2xlPXB1Ymxpc2hlciZzZXNzaW9uX2lkPTFfTVg0ME5EazFOalF3TW41LVUyRjBJRUYxWnlBeU15QXhNRG94TkRveE1DQlFSRlFnTWpBeE5INHdMakl5T0RFMU5URTBmbjQmY3JlYXRlX3RpbWU9MTQwODgxOTEyMCZub25jZT0wLjYxNDA1MzA4MTY3MjI5Njc=';
+    var token = '<%= token %>';
     session.on ({
       streamCreated: function(event) {
         session.subscribe(event.stream, 'subscribersDiv', {insertMode: 'append'});
