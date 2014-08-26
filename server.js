@@ -4,6 +4,7 @@ var OpenTok = require('opentok'),
     opentok = new OpenTok("44956442", "9461b7c9ced22aa397f23bb91564d3ddf5e88e1f");
 
 var chat = {};
+var roomsession = {};
 
 app.get('/', function(req, res){
   res.render('index');
@@ -30,12 +31,23 @@ app.get('/getchat', function(req, res){
 });
 
 app.get('/videochat/:rmname', function(req, res){
-  opentok.createSession(function(err, session) {
-    if (err) return console.log(err);
-    SID = session.sessionId;
+  console.log(roomsession[req.query.rmname] != undefined);
+  console.log(roomsession[req.query.rmname]);
+  if (roomsession[req.query.rmname] != undefined){
+    SID = roomsession[req.query.rmname];
     var TK = opentok.generateToken(SID);
     res.render('videochat', {session: SID, token: TK});
-  });
+  }
+  else {
+    opentok.createSession(function(err, session) {
+      if (err) return console.log(err);
+      SID = session.sessionId;
+      roomsession[req.query.rmname] = SID;
+      console.log(SID);
+      var TK = opentok.generateToken(SID);
+      res.render('videochat', {session: SID, token: TK});
+    });
+  };
 });
 
 app.listen(8888);
