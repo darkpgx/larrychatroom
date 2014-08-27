@@ -32,18 +32,17 @@ app.get('/getchat', function(req, res){
 
 app.get('/videochat/:rmname', function(req, res){
   if (typeof room_session[req.query.rmname] === "string" && room_session[req.query.rmname] !== ""){
-    SID = room_session[req.query.rmname];
-    var TK = opentok.generateToken(SID);
-    res.render('videochat', {session: SID, token: TK});
+    var session_id = room_session[req.query.rmname];
+    var TK = opentok.generateToken(session_id);
+    res.render('videochat', {session: session_id, token: TK});
   }
   else {
     opentok.createSession(function(err, session) {
       if (err) return console.log(err);
-      SID = session.sessionId;
-      room_session[req.query.rmname] = SID;
-      console.log(SID);
-      var TK = opentok.generateToken(SID);
-      res.render('videochat', {session: SID, token: TK});
+      var session_id = session.sessionId;
+      room_session[req.query.rmname] = session_id;
+      var TK = opentok.generateToken(session_id);
+      res.render('videochat', {session: session_id, token: TK});
     });
   };
 });
