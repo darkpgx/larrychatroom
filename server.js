@@ -31,8 +31,8 @@ app.get('/getchat', function(req, res){
 });
 
 app.get('/videochat/:rmname', function(req, res){
-  if (typeof room_session[req.query.rmname] === "string" && room_session[req.query.rmname] !== ""){
-    var session_id = room_session[req.query.rmname];
+  if (typeof room_session[req.params.rmname] === "string" && room_session[req.params.rmname] !== ""){
+    var session_id = room_session[req.params.rmname];
     var TK = opentok.generateToken(session_id);
     res.render('videochat', {session: session_id, token: TK});
   }
@@ -40,7 +40,7 @@ app.get('/videochat/:rmname', function(req, res){
     opentok.createSession(function(err, session) {
       if (err) return console.log(err);
       var session_id = session.sessionId;
-      room_session[req.query.rmname] = session_id;
+      room_session[req.params.rmname] = session_id;
       var TK = opentok.generateToken(session_id);
       res.render('videochat', {session: session_id, token: TK});
     });
