@@ -31,9 +31,7 @@ app.get('/getchat', function(req, res){
 });
 
 app.get('/videochat/:rmname', function(req, res){
-  console.log(room_session[req.query.rmname] != undefined);
-  console.log(room_session[req.query.rmname]);
-  if (room_session[req.query.rmname] != undefined){
+  if (typeof room_session[req.query.rmname] === "string" && room_session[req.query.rmname] !== ""){
     SID = room_session[req.query.rmname];
     var TK = opentok.generateToken(SID);
     res.render('videochat', {session: SID, token: TK});
