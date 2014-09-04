@@ -1,9 +1,9 @@
 {
-      "name":"NodeOpenTok",
-          "version":"0.0.2",
-              "dependencies":{
-                      "opentok":"1.0.x",
-                            "express":"",
-                                  "ejs":""
-                                      }
+  "name":"NodeOpenTok",
+  "version":"0.0.2",
+  "dependencies":{
+    "opentok":"1.0.x",
+    "express":"",
+    "ejs":""
+    }
 }
