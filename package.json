@@ -1,9 +1,28 @@
 {
-  "name":"NodeOpenTok",
-    "version":"0.0.2",
-    "dependencies":{
-      "opentok":"2.2.4",
-      "express":"",
-      "ejs":""
-    }
+  "name": "chatroom",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "db": "^1.0.6",
+    "ejs": "^1.0.0",
+    "express": "^4.8.5",
+    "nodemailer": "^1.2.1",
+    "opentok": "^2.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darkpgx/larrychatroom.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/darkpgx/larrychatroom/issues"
+  },
+  "homepage": "https://github.com/darkpgx/larrychatroom"
 }
