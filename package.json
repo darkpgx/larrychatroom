@@ -1,26 +1,9 @@
 {
-  "name": "chatroom",
-  "version": "0.0.0",
-  "description": "",
-  "main": "server.js",
-  "dependencies": {
-    "db": "",
-    "ejs": "",
-    "express": "",
-    "opentok": "2.2.4"
-  },
-  "engines": {
-    "node": "0.10.x"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@heroku.com:larryschatroom.git"
-  },
-  "author": "",
-  "license": "ISC"
+      "name":"NodeOpenTok",
+          "version":"0.0.2",
+              "dependencies":{
+                      "opentok":"2.2.4",
+                            "express":"",
+                                  "ejs":""
+                                      }
 }
