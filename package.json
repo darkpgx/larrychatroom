@@ -1,5 +1,5 @@
 {
-  "name": "larryschatroom",
+  "name": "chatroom",
   "version": "0.0.0",
   "description": "",
   "main": "server.js",
@@ -9,10 +9,18 @@
     "express": "^4.8.5",
     "opentok": "^2.2.4"
   },
+  "engines": {
+    "node": "0.10.x"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:larryschatroom.git"
+  },
+  "author": "",
   "license": "ISC"
 }
