@@ -1,7 +1,7 @@
 var app = require('express')();
 app.set('view engine', 'ejs');
 var OpenTok = require('opentok'),
-    opentok = new OpenTok('44956442','9461b7c9ced22aa397f23bb91564d3ddf5e88e1f');
+    opentok = new OpenTok( process.env.api_key, process.env.api_secret );
 
 var chat = {};
 var room_session = {};
