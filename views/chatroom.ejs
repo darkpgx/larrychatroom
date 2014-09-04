@@ -10,15 +10,25 @@
     #chatbox{
       border: 2px solid black;
       width: 300px;
-      height: 500px;
+      height: 300px;
       overflow: auto;
+    }
+
+    #myPublisherDiv{
+      display: inline-block;
+    }
+    #subscribersDiv{
+      display: inline-block;
     }
   </style>
 </head>
 <body>
+  <div id = 'myPublisherDiv'></div>
+  <div id = 'subscribersDiv'></div>
   <div>
-    <button>Home</button>
-  Welcome to room:<%= rmname %>
+    <button id = "home">Home</button>
+    Welcome to room:<%= rmname %>
+    <button id ="videochat">Video Chat</button>
   </div>
   <div>
     <div>
@@ -26,6 +36,7 @@
     </div>
     <div id="chatbox"></div>
   </div>
+  <script src='//static.opentok.com/webrtc/v2.2/js/opentok.min.js'></script>
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script>
     var user = prompt("Enter user name");
@@ -41,8 +52,29 @@
       $('#chatbox').animate({scrollTop: 10000}, 100);
     }, 500);
 
-    $('button').click( function () {
+    $('#home').click( function () {
       window.location = '/';
+    });
+    $('#videochat').click( function() {
+      $.get("/videochat/" + rmname, function(res) {
+        var api_key = res.api_key;
+        var session_id = res.session_id;
+        var token = res.token;
+        var session = OT.initSession(api_key, session_id);
+        session.on ({
+          streamCreated: function(event) {
+            session.subscribe(event.stream, 'subscribersDiv', {insertMode: 'append'});
+          }
+        });
+        session.connect(token, function(error) {
+          if (error) {
+            console.log(error.message);
+          }
+          else {
+            session.publish('myPublisherDiv', {width:320, height:240});
+          };
+        });
+      });
     });
     $('input').keyup(function(e){
       if(e.keyCode == 13 & $(this).val() !== ""){
