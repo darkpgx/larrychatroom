@@ -77,8 +77,12 @@
         });
       });
     });
+
+    //send transcript upon clicking 
     $('#mailmsg').click( function() {
       var email = prompt('Enter your email address:');
+      window.location.href = "mailto:" + email
+                            +"?subject=Chatroom Message From Roomname: " + rmname;
     });
     $('input').keyup(function(e){
       if(e.keyCode == 13 & $(this).val() !== ""){

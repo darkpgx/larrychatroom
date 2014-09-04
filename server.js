@@ -48,4 +48,5 @@ app.get('/videochat/:rmname', function(req, res){
   };
 });
 
-app.listen(8888);
+var port = process.env.PORT || 8888;
+app.listen(port);
