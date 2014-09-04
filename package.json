@@ -4,10 +4,10 @@
   "description": "",
   "main": "server.js",
   "dependencies": {
-    "db": "^1.0.6",
-    "ejs": "^1.0.0",
-    "express": "^4.8.5",
-    "opentok": "^2.2.4"
+    "db": "",
+    "ejs": "",
+    "express": "",
+    "opentok": "2.2.4"
   },
   "engines": {
     "node": "0.10.x"
