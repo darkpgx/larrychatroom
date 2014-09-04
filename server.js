@@ -2,9 +2,33 @@ var app = require('express')();
 app.set('view engine', 'ejs');
 var OpenTok = require('opentok'),
     opentok = new OpenTok(process.env.api_key, process.env.api_secret ); 
+var nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+    auth: {
+      user: process.env.nodemail_key,
+    pass: process.env.nodemail_pass
+    }
+});
 
 var chat = {};
 var room_session = {};
+
+//sending email
+app.get('/mailmsg', function(req, res){
+  var mail_text = '';
+  var chat_array = chat[req.query.rmname];
+  for (var i = 0; i< chat_array.length; i++) {
+    mail_text = mail_text + chat_array[i].user + ': ' + chat_array[i].msg + '\n';
+  };
+  transporter.sendMail({
+    from: process.env.nodemail_key,
+    to: req.query.email,
+    subject: "Transcript from Chatroom: " + req.query.rmname,
+    text: mail_text
+  });
+  res.send('success');
+});
 
 app.get('/', function(req, res){
   res.render('index');
