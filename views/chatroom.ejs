@@ -29,6 +29,7 @@
     <button id = "home">Home</button>
     Welcome to room:<%= rmname %>
     <button id ="videochat">Video Chat</button>
+    <button id ="mailmsg">Send transcript</button>
   </div>
   <div>
     <div>
@@ -75,6 +76,9 @@
           };
         });
       });
+    });
+    $('#mailmsg').click( function() {
+      var email = prompt('Enter your email address:');
     });
     $('input').keyup(function(e){
       if(e.keyCode == 13 & $(this).val() !== ""){
