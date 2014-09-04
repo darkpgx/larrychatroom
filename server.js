@@ -30,11 +30,12 @@ app.get('/getchat', function(req, res){
   res.send(chat[req.query.rmname]);
 });
 
+// app to insert videochat
 app.get('/videochat/:rmname', function(req, res){
   if (typeof room_session[req.params.rmname] === "string" && room_session[req.params.rmname] !== ""){
     var session_id = room_session[req.params.rmname];
     var TK = opentok.generateToken(session_id);
-    res.render('videochat', {session: session_id, token: TK});
+    res.send({api_key: process.env.api_key, session_id: session_id, token: TK});
   }
   else {
     opentok.createSession(function(err, session) {
@@ -42,7 +43,7 @@ app.get('/videochat/:rmname', function(req, res){
       var session_id = session.sessionId;
       room_session[req.params.rmname] = session_id;
       var TK = opentok.generateToken(session_id);
-      res.render('videochat', {session: session_id, token: TK});
+      res.send({api_key: process.env.api_key, session_id: session_id, token: TK});
     });
   };
 });
