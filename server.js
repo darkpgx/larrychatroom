@@ -11,15 +11,22 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-var term_chat = { '123': {'sent':[]}};
+var term_chat = {};
 var chat = {};
 var room_session = {};
 
 //send res to terminal request
 
 app.get('/getmessage', function(req,res) {
-  term_chat[req.query.username] = req.query.send_msg;
-  res.send(term_chat[req.query.username]);
+  if(req.query.rec_name == "") {res.send("No Recepient")};
+  if(!(req.query.rec_name in term_chat)){
+    term_chat[req.query.rec_name] = [];
+    term_chat[req.query.rec_name].push({sender: req.query.username, msg: req.query.send_msg});
+  }
+  else{
+    term_chat[req.query.rec_name].push({sender: req.query.username, msg: req.query.send_msg});
+  };
+  res.send(term_chat[req.query.rec_name]);
 });
 
 //sending email
