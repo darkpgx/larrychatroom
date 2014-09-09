@@ -11,8 +11,16 @@ var transporter = nodemailer.createTransport({
     }
 });
 
+var term_chat = { '123': {'sent':[]}};
 var chat = {};
 var room_session = {};
+
+//send res to terminal request
+
+app.get('/getmessage', function(req,res) {
+  term_chat[req.query.username] = req.query.send_msg;
+  res.send(term_chat[req.query.username]);
+});
 
 //sending email
 app.get('/mailmsg', function(req, res){
