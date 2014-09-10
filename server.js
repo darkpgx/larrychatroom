@@ -36,6 +36,7 @@ app.get('/termchat/chat', function(req, res){
 app.get('/termchat/get', function(req, res){
   if (!(req.query.roomname in term_chat)) {res.end();};
   if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.end();};
+  console.log(term_chat[req.query.roomname]["chat"]);
   res.send(term_chat[req.query.roomname]["chat"]);
 });
 
