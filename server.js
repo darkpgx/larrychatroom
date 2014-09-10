@@ -15,6 +15,13 @@ var term_chat = {};
 var chat = {};
 var room_session = {};
 
+//receive message on terminal request
+
+app.get('/receivemessage', function(req, res) {
+  if(!(req.query.username) in term_chat) {res.send("User does not exist");}
+  res.send("Messages");
+});
+
 //send res to terminal request
 
 app.get('/getmessage', function(req,res) {
