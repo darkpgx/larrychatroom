@@ -15,25 +15,28 @@ var term_chat = {};
 var chat = {};
 var room_session = {};
 
-//receive message on terminal request
-
-app.get('/receivemessage', function(req, res) {
-  if(!(req.query.username) in term_chat) {res.send("User does not exist");}
-  res.send("Messages");
+//roomcreate handler
+app.get('/termchat', function(req, res){
+  if (req.query.roomname in term_chat) {res.send('Roomname Exists Already.');};
+  term_chat[req.query.roomname] = { "roomname" : req.query.roomname,
+                                    "password" : req.query.password,
+                                    "chat"     : []};
+  res.send('Room Created with roomname: ' + term_chat[req.query.roomname]["roomname"] + 
+           ' and password: ' + term_chat[req.query.roomname]["password"]);
 });
 
-//send res to terminal request
+//chatsession handler
+app.get('/termchat/chat', function(req, res){
+  if (!(req.query.roomname in term_chat)) {res.send("Roomname does not exist");};
+  if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.send("Wrong password");};
+  term_chat[req.query.roomname]["chat"].push({"username": req.query.username, "send_msg": req.query.send_msg});
+  res.end();
+});
 
-app.get('/getmessage', function(req,res) {
-  if(req.query.rec_name == "") {res.send("No Recepient")};
-  if(!(req.query.rec_name in term_chat)){
-    term_chat[req.query.rec_name] = [];
-    term_chat[req.query.rec_name].push({sender: req.query.username, msg: req.query.send_msg});
-  }
-  else{
-    term_chat[req.query.rec_name].push({sender: req.query.username, msg: req.query.send_msg});
-  };
-  res.send(term_chat[req.query.rec_name]);
+app.get('/termchat/get', function(req, res){
+  if (!(req.query.roomname in term_chat)) {res.end();};
+  if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.end();};
+  res.send(term_chat[req.query.roomname]["chat"]);
 });
 
 //sending email
