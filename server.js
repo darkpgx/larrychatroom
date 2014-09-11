@@ -34,8 +34,6 @@ app.get('/termchat/join', function(req, res){
 
 //chatsession handler
 app.get('/termchat/chat', function(req, res){
-  if (!(req.query.roomname in term_chat)) {res.send("Roomname does not exist");};
-  if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.send("Wrong password");};
   term_chat[req.query.roomname]["chat"].push({"username": req.query.username, "send_msg": req.query.send_msg});
   res.end();
 });
