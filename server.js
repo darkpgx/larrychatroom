@@ -25,6 +25,13 @@ app.get('/termchat', function(req, res){
            ' and password: ' + term_chat[req.query.roomname]["password"]);
 });
 
+//join room handler
+app.get('/termchat/join', function(req, res){
+  if (!(req.query.roomname in term_chat)) {res.send("Roomname does not exist");};
+  if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.send("Wrong password");};
+  res.send("Joining room " + req.query.roomname);
+});
+
 //chatsession handler
 app.get('/termchat/chat', function(req, res){
   if (!(req.query.roomname in term_chat)) {res.send("Roomname does not exist");};
