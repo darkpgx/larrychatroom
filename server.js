@@ -15,19 +15,17 @@ var term_chat = {};
 var chat = {};
 var room_session = {};
 
-//roomcreate handler
-app.get('/termchat', function(req, res){
-  if (req.query.roomname in term_chat) {res.send('Roomname Exists Already.');};
-  term_chat[req.query.roomname] = { "roomname" : req.query.roomname,
-                                    "password" : req.query.password,
-                                    "chat"     : []};
-  res.send('Room Created with roomname: ' + term_chat[req.query.roomname]["roomname"] + 
-           ' and password: ' + term_chat[req.query.roomname]["password"]);
-});
-
-//join room handler
+//if no room exists, create one, else join room and send roomname and password
 app.get('/termchat/join', function(req, res){
-  if (!(req.query.roomname in term_chat)) {res.send("Roomname does not exist");};
+  if (!(req.query.roomname in term_chat)) {
+    term_chat[req.query.roomname] = { 
+      "roomname" : req.query.roomname,
+      "password" : req.query.password,
+      "chat"     : []
+    };
+    res.send('Room Created with roomname: ' + term_chat[req.query.roomname]["roomname"] + 
+      ' and password: ' + term_chat[req.query.roomname]["password"]);
+  };
   if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.send("Wrong password");};
   res.send("Joining room " + req.query.roomname);
 });
@@ -41,7 +39,6 @@ app.get('/termchat/chat', function(req, res){
 app.get('/termchat/get', function(req, res){
   if (!(req.query.roomname in term_chat)) {res.end();};
   if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.end();};
-  console.log(term_chat[req.query.roomname]["chat"]);
   res.send(term_chat[req.query.roomname]["chat"]);
 });
 
