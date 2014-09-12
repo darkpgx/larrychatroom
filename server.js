@@ -1,5 +1,9 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 var OpenTok = require('opentok'),
     opentok = new OpenTok(process.env.api_key, process.env.api_secret ); 
 var nodemailer = require('nodemailer');
@@ -16,30 +20,32 @@ var chat = {};
 var room_session = {};
 
 //if no room exists, create one, else join room and send roomname and password
-app.get('/termchat/join', function(req, res){
-  if (!(req.query.roomname in term_chat)) {
-    term_chat[req.query.roomname] = { 
-      "roomname" : req.query.roomname,
-      "password" : req.query.password,
+app.post('/termchat/join', function(req, res){
+  if (!(req.body.roomname in term_chat)) {
+    term_chat[req.body.roomname] = { 
+      "roomname" : req.body.roomname,
+      "password" : req.body.password,
       "chat"     : []
     };
-    res.send('Room Created with roomname: ' + term_chat[req.query.roomname]["roomname"] + 
-      ' and password: ' + term_chat[req.query.roomname]["password"]);
+    res.send('Room Created with roomname: ' + term_chat[req.body.roomname]["roomname"] + 
+      ' and password: ' + term_chat[req.body.roomname]["password"]);
   };
-  if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.send("Wrong password");};
-  res.send("Joining room " + req.query.roomname);
+  if (req.body.password !== term_chat[req.body.roomname]["password"]) {res.send("Wrong password");};
+  res.send("Joining room " + req.body.roomname);
 });
 
-//chatsession handler
-app.get('/termchat/chat', function(req, res){
-  term_chat[req.query.roomname]["chat"].push({"username": req.query.username, "send_msg": req.query.send_msg});
-  res.end();
+//add messages to room
+app.post('/termchat/chat', function(req, res){
+  console.log(term_chat[req.body.roomname]);
+  term_chat[req.body.roomname]["chat"].push({"username": req.body.username, "send_msg": req.body.send_msg});
+  res.send(term_chat[req.body.roomname]["chat"]);
 });
 
-app.get('/termchat/get', function(req, res){
-  if (!(req.query.roomname in term_chat)) {res.end();};
-  if (req.query.password !== term_chat[req.query.roomname]["password"]) {res.end();};
-  res.send(term_chat[req.query.roomname]["chat"]);
+//send message on client console
+app.post('/termchat/get', function(req, res){
+  if (!(req.body.roomname in term_chat)) {res.send('end');};
+  if (req.body.password !== term_chat[req.body.roomname]["password"]) {res.send('end');};
+  res.json(term_chat[req.body.roomname]["chat"]);
 });
 
 //sending email
